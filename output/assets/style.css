@@ -1,0 +1,41 @@
+body {
+    background-image: url(./low_contrast_linen/low_contrast_linen.png);
+}
+
+/* fix team heading background, validate input entries, link to github accounts */
+
+
+.team-heading {
+    margin: 20px;
+    width: 100%;
+    /* background-color: rgb(53, 178, 209); */
+    background-image: url(./green_dust_scratch/green_dust_scratch.png);
+    border-radius: 10px;
+}
+
+h1 {
+    font-size: 80px
+}
+
+.card-row {
+    margin: 0 auto;
+
+}
+.employee-card {
+    margin: auto;
+    margin-bottom: 10px;
+    width: 300px;
+    height: 400px;
+}
+
+.manager {
+    background-color: rgb(76, 92, 238);
+}
+
+.engineer {
+    background-color: rgb(46, 240, 55);
+}
+
+.intern {
+    background-color: rgb(247, 234, 51);
+}

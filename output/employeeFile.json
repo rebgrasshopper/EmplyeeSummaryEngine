@@ -64,11 +64,27 @@
         "team": "t-bird"
     },
     {
-        "name": "lksadflkjfad",
-        "id": "klafdkjadsf",
-        "email": "klafsjklfda",
-        "role": "Manager",
-        "officeNumber": "5433213",
+        "name": "Berthold",
+        "id": "0982498235",
+        "email": "bertholdthegreat@company.com",
+        "role": "Engineer",
+        "github": "bertholdthegreat",
         "team": "t-bird"
+    },
+    {
+        "name": "Angie",
+        "id": "092349235",
+        "email": "angela@company.com",
+        "role": "Intern",
+        "school": "Boise B",
+        "team": "t-bird"
+    },
+    {
+        "name": "Stella",
+        "id": "09283405",
+        "email": "stella@company.com",
+        "role": "Engineer",
+        "github": "stellaray",
+        "team": "thoughtifiers"
     }
 ]
