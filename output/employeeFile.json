@@ -16,14 +16,6 @@
         "team": "t-bird"
     },
     {
-        "name": "Juji",
-        "id": "09234234",
-        "email": "juji@company.com",
-        "role": "Intern",
-        "school": "Montana U",
-        "team": "t-bird"
-    },
-    {
         "name": "Khaleef",
         "id": "0293458u234",
         "email": "khaleef@company.com",
@@ -62,5 +54,21 @@
         "role": "Engineer",
         "github": "lonnylee",
         "team": "thoughtifiers"
+    },
+    {
+        "name": "Kamal",
+        "id": "092354235",
+        "email": "kamal@company.com",
+        "role": "Intern",
+        "school": "University of Minnesota",
+        "team": "t-bird"
+    },
+    {
+        "name": "lksadflkjfad",
+        "id": "klafdkjadsf",
+        "email": "klafsjklfda",
+        "role": "Manager",
+        "officeNumber": "5433213",
+        "team": "t-bird"
     }
 ]
