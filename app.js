@@ -11,12 +11,14 @@ const outputPath = path.join(OUTPUT_DIR, "team.html");
 const render = require("./lib/htmlRenderer");
 
 let employeeData;
+let finalHTML;
 
 async function getEmployeeData(answers){
     fs.readFile("./output/employeeFile.json", { encoding:"utf8" }, function(error, data) {
         if (error) {
             console.log(error);
         } else {
+            let thisEmployee = answers;
             console.log("I'm returning!");
             console.log(data);
             employeeData = JSON.parse(data);
@@ -29,7 +31,15 @@ async function getEmployeeData(answers){
                 if (error) {
                     return console.log(error);
                 }
-                console.log("Employee written to file");
+                console.log("Employee written to file, rendering HTML");
+                let thisTeam = employeeData.filter(employee => employee.team === answers.team)
+                finalHTML = render(thisTeam);
+                fs.writeFile(`./output/${answers.team}.html`, finalHTML, function(error){
+                    if (error) {
+                        return console.log(error);
+                    }
+                    console.log("HTML file written.");
+                })
             })
         }
     })
@@ -74,6 +84,12 @@ const questions = [
         name: "officeNumber",
         when: (answers) => answers.role === "Manager",
     },
+    {
+        type: "input",
+        message: "What team is this employee being added to? ",
+        name: "team",
+    },
+
 ];
 
 inquirer.prompt(questions).then(function(answers){

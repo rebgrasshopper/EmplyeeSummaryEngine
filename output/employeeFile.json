@@ -4,13 +4,63 @@
         "id": "2340923",
         "email": "jun@company.com",
         "role": "Manager",
-        "officeNumber": "206-565-9898"
+        "officeNumber": "206-565-9898",
+        "team": "t-bird"
     },
     {
         "name": "Susu",
         "id": "90832420394",
         "email": "susu@company.com",
         "role": "Engineer",
-        "github": "susnakamura"
+        "github": "susnakamura",
+        "team": "t-bird"
+    },
+    {
+        "name": "Juji",
+        "id": "09234234",
+        "email": "juji@company.com",
+        "role": "Intern",
+        "school": "Montana U",
+        "team": "t-bird"
+    },
+    {
+        "name": "Khaleef",
+        "id": "0293458u234",
+        "email": "khaleef@company.com",
+        "role": "Engineer",
+        "github": "khaleefbrown",
+        "team": "t-bird"
+    },
+    {
+        "name": "Jonas",
+        "id": "02934",
+        "email": "jonas@company.com",
+        "role": "Manager",
+        "officeNumber": "252-334-2963",
+        "team": "thoughtifiers"
+    },
+    {
+        "name": "Josue",
+        "id": "092341",
+        "email": "josue@company.com",
+        "role": "Manager",
+        "officeNumber": "252-334-5698",
+        "team": "thoughtifiers"
+    },
+    {
+        "name": "Jun",
+        "id": "09234234",
+        "email": "jundfatorio@company.com",
+        "role": "Intern",
+        "school": "Loopy U",
+        "team": "thoughtifiers"
+    },
+    {
+        "name": "Lonny",
+        "id": "9234234",
+        "email": "lonny@company.com",
+        "role": "Engineer",
+        "github": "lonnylee",
+        "team": "thoughtifiers"
     }
 ]
