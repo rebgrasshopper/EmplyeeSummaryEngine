@@ -1,0 +1,16 @@
+[
+    {
+        "name": "Jun",
+        "id": "2340923",
+        "email": "jun@company.com",
+        "role": "Manager",
+        "officeNumber": "206-565-9898"
+    },
+    {
+        "name": "Susu",
+        "id": "90832420394",
+        "email": "susu@company.com",
+        "role": "Engineer",
+        "github": "susnakamura"
+    }
+]
