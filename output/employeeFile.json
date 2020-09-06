@@ -12,7 +12,7 @@
         "id": "90832420394",
         "email": "susu@company.com",
         "role": "Engineer",
-        "github": "susnakamura",
+        "github": "susunakamura",
         "team": "t-bird"
     },
     {
@@ -22,30 +22,6 @@
         "role": "Engineer",
         "github": "khaleefbrown",
         "team": "t-bird"
-    },
-    {
-        "name": "Jonas",
-        "id": "02934",
-        "email": "jonas@company.com",
-        "role": "Manager",
-        "officeNumber": "252-334-2963",
-        "team": "thoughtifiers"
-    },
-    {
-        "name": "Josue",
-        "id": "092341",
-        "email": "josue@company.com",
-        "role": "Manager",
-        "officeNumber": "252-334-5698",
-        "team": "thoughtifiers"
-    },
-    {
-        "name": "Jun",
-        "id": "09234234",
-        "email": "jundfatorio@company.com",
-        "role": "Intern",
-        "school": "Loopy U",
-        "team": "thoughtifiers"
     },
     {
         "name": "Lonny",
@@ -64,27 +40,12 @@
         "team": "t-bird"
     },
     {
-        "name": "Berthold",
-        "id": "0982498235",
-        "email": "bertholdthegreat@company.com",
-        "role": "Engineer",
-        "github": "bertholdthegreat",
-        "team": "t-bird"
-    },
-    {
-        "name": "Angie",
-        "id": "092349235",
-        "email": "angela@company.com",
+        "action": "Add an employee",
+        "name": "Nicholas",
+        "id": "974562",
+        "email": "ndfallsbrook@company.com",
         "role": "Intern",
-        "school": "Boise B",
-        "team": "t-bird"
-    },
-    {
-        "name": "Stella",
-        "id": "09283405",
-        "email": "stella@company.com",
-        "role": "Engineer",
-        "github": "stellaray",
-        "team": "thoughtifiers"
+        "school": "UC Santa Barbara",
+        "team": "Launch Team"
     }
 ]

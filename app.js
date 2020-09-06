@@ -12,21 +12,47 @@ const render = require("./lib/htmlRenderer");
 
 let employeeData;
 let finalHTML;
+let teamList = [];
+let employeeList = [];
+
+function initialEmployeeData() {
+    fs.readFile("./output/employeeFile.json", { encoding:"utf8" }, function(error, data) {
+        if (error) {
+            console.log(error);
+        } else {
+            employeeData = JSON.parse(data);
+            for (let employee of employeeData) {
+                if (!(teamList.includes(employee.team))) {
+                    teamList.push(employee.team);
+                }
+                if (!(employeeList.includes(`${employee.name}, Team: ${employee.team}`))) {
+                    employeeList.push(`${employee.name}, Team: ${employee.team}`);
+                }
+            }
+        }
+    })
+}
 
 async function getEmployeeData(answers){
     fs.readFile("./output/employeeFile.json", { encoding:"utf8" }, function(error, data) {
         if (error) {
             console.log(error);
+        } else if (answers.action === "Remove an Employee") {
+            employeeData = JSON.parse(data);
+        } else if (answers.action === "Re-render a team page") {
+            employeeData = JSON.parse(data);
+            let thisTeam = employeeData.filter(employee => employee.team === answers.reteam)
+                finalHTML = render(thisTeam);
+                fs.writeFile(`./output/${answers.reteam}.html`, finalHTML, function(error){
+                    if (error) {
+                        return console.log(error);
+                    }
+                    console.log("HTML file written.");
+                });
         } else {
             let thisEmployee = answers;
-            console.log("I'm returning!");
-            console.log(data);
             employeeData = JSON.parse(data);
-            console.log(employeeData);
-            console.log(answers);
-            console.log("---------");
             employeeData.push(answers);
-            console.log(employeeData);
             fs.writeFile("./output/employeeFile.json", JSON.stringify(employeeData, null, 4), function(error){
                 if (error) {
                     return console.log(error);
@@ -46,58 +72,88 @@ async function getEmployeeData(answers){
 }
 const questions = [
     {
+        type: "list",
+        message: "What would you like to do? ",
+        name: "action",
+        choices: ["Add an employee", "Remove an Employee", "Re-render a team page"]
+    },
+    {
+        type: "list",
+        message: "Which team's page would you like to re-render? ",
+        name: "reteam",
+        when: (answers) => answers.action === "Re-render a team page",
+        choices: teamList
+    },
+    {
         type: "input",
         message: "Employee name: ",
-        name: "name"
+        name: "name",
+        when: (answers) => answers.action === "Add an employee",
     },
     {
         type: "input",
         message: "Employee ID: ",
         name: "id",
+        when: (answers) => answers.action === "Add an employee",
     },
     {
         type: "input",
         message: "Employee email: ",
         name: "email",
+        when: (answers) => answers.action === "Add an employee",
     },
     {
         type:"list",
         message: "Choose which role the employee is fulfilling: ",
         choices: ["Engineer", "Intern", "Manager"],
         name: "role",
+        when: (answers) => answers.action === "Add an employee",
     },
     {
         type: "input",
         message: "Employee GitHub username: ",
         name: "github",
-        when: (answers) => answers.role === "Engineer",
+        when: (answers) => ((answers.action === "Add an employee") && (answers.role === "Engineer")),
     },
     {
         type: "input",
         message: "Employee school: ",
         name: "school",
-        when: (answers) => answers.role === "Intern",
+        when: (answers) => ((answers.action === "Add an employee") && (answers.role === "Intern")),
     },
     {
         type: "input",
         message: "Employee office phone number: ",
         name: "officeNumber",
-        when: (answers) => answers.role === "Manager",
+        when: (answers) => ((answers.action === "Add an employee") && (answers.role === "Manager")),
+        //phone number validation from Inquirer documentation
+        validate: function (value) {
+            var pass = value.match(
+              /^([01]{1})?[-.\s]?\(?(\d{3})\)?[-.\s]?(\d{3})[-.\s]?(\d{4})\s?((?:#|ext\.?\s?|x\.?\s?){1}(?:\d+)?)?$/i
+            );
+            if (pass) {
+              return true;
+            }
+      
+            return 'Please enter a valid phone number';
+          },
     },
     {
         type: "input",
         message: "What team is this employee being added to? ",
         name: "team",
+        when: (answers) => answers.action === "Add an employee",
     },
 
 ];
 
+initialEmployeeData();
 inquirer.prompt(questions).then(function(answers){
-    getEmployeeData(answers)
+    getEmployeeData(answers);
 
 
 
-})
+});
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
 
@@ -119,4 +175,4 @@ inquirer.prompt(questions).then(function(answers){
 // and Intern classes should all extend from a class named Employee; see the directions
 // for further information. Be sure to test out each class and verify it generates an
 // object with the correct structure and methods. This structure will be crucial in order
-// for the provided `render` function to work! ```
+// for the provided `render` function to work! 
