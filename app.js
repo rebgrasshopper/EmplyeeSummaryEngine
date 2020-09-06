@@ -15,6 +15,7 @@ let finalHTML;
 let teamList = [];
 let employeeList = [];
 
+//read employeeFile and save data to employeeData, also creating a total list of employees and teams
 function initialEmployeeData() {
     fs.readFile("./output/employeeFile.json", { encoding:"utf8" }, function(error, data) {
         if (error) {
@@ -33,43 +34,68 @@ function initialEmployeeData() {
     })
 }
 
+//process all answers and write team html files
 async function getEmployeeData(answers){
-    fs.readFile("./output/employeeFile.json", { encoding:"utf8" }, function(error, data) {
-        if (error) {
-            console.log(error);
-        } else if (answers.action === "Remove an Employee") {
-            employeeData = JSON.parse(data);
-        } else if (answers.action === "Re-render a team page") {
-            employeeData = JSON.parse(data);
-            let thisTeam = employeeData.filter(employee => employee.team === answers.reteam)
-                finalHTML = render(thisTeam);
-                fs.writeFile(`./output/${answers.reteam}.html`, finalHTML, function(error){
-                    if (error) {
-                        return console.log(error);
-                    }
-                    console.log("HTML file written.");
-                });
-        } else {
-            let thisEmployee = answers;
-            employeeData = JSON.parse(data);
-            employeeData.push(answers);
-            fs.writeFile("./output/employeeFile.json", JSON.stringify(employeeData, null, 4), function(error){
+    if (answers.action === "Remove an Employee") {
+        //find and remove employee from employeeData
+        let index;
+        for (let employee in employeeData){
+            if (`${employeeData[employee].name}, Team: ${employeeData[employee].team}` === answers.unemploy) {
+                index = employee;
+            }
+        }
+        employeeData.splice(index, 1);
+
+        //write new employeeData file without thisEmployee
+        fs.writeFile("./output/employeeFile.json", JSON.stringify(employeeData, null, 4), function(error){
+            if (error) {
+                return console.log(error);
+            }
+            console.log("Employee removed from team, rendering new team HTML");
+            let thisTeam = employeeData.filter(employee => employee.team === employeeData[index].team)
+            finalHTML = render(thisTeam);
+            fs.writeFile(`./output/${employeeData[index].team.replace(/ /g, "")}.html`, finalHTML, function(error){
                 if (error) {
                     return console.log(error);
                 }
-                console.log("Employee written to file, rendering HTML");
-                let thisTeam = employeeData.filter(employee => employee.team === answers.team)
-                finalHTML = render(thisTeam);
-                fs.writeFile(`./output/${answers.team}.html`, finalHTML, function(error){
-                    if (error) {
-                        return console.log(error);
-                    }
-                    console.log("HTML file written.");
-                })
+                console.log("HTML file written.");
+            });
+        });
+
+    } else if (answers.action === "Re-render a team page") {
+        //find all employees matching the team to re-render, and pass them to render function
+        let thisTeam = employeeData.filter(employee => employee.team === answers.reteam)
+            finalHTML = render(thisTeam);
+            fs.writeFile(`./output/${answers.reteam.replace(/ /g, "")}.html`, finalHTML, function(error){
+                if (error) {
+                    return console.log(error);
+                }
+                console.log("HTML file written.");
+            });
+
+    } else {
+        //add new employee to employeeData, and re-write employeeFile
+        employeeData.push(answers);
+        fs.writeFile("./output/employeeFile.json", JSON.stringify(employeeData, null, 4), function(error){
+            if (error) {
+                return console.log(error);
+            }
+            console.log("Employee written to file, rendering HTML");
+
+            //find all employees with a matching team name, and pass them to render file
+            let thisTeam = employeeData.filter(employee => employee.team === answers.team)
+            finalHTML = render(thisTeam);
+            fs.writeFile(`./output/${answers.team.replace(/ /g, "")}.html`, finalHTML, function(error){
+                if (error) {
+                    return console.log(error);
+                }
+                console.log("HTML file written.");
             })
-        }
-    })
+        })
+    }
 }
+
+//inquirer prompts
 const questions = [
     {
         type: "list",
@@ -83,6 +109,13 @@ const questions = [
         name: "reteam",
         when: (answers) => answers.action === "Re-render a team page",
         choices: teamList
+    },
+    {
+        type: "list",
+        message: "Which employee would you like to remove? ",
+        name: "unemploy",
+        when: (answers) => answers.action === "Remove an Employee",
+        choices: employeeList,
     },
     {
         type: "input",

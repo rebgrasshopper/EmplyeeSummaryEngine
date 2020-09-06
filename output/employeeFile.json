@@ -24,14 +24,6 @@
         "team": "t-bird"
     },
     {
-        "name": "Lonny",
-        "id": "9234234",
-        "email": "lonny@company.com",
-        "role": "Engineer",
-        "github": "lonnylee",
-        "team": "thoughtifiers"
-    },
-    {
         "name": "Kamal",
         "id": "092354235",
         "email": "kamal@company.com",
@@ -46,6 +38,15 @@
         "email": "ndfallsbrook@company.com",
         "role": "Intern",
         "school": "UC Santa Barbara",
+        "team": "Launch Team"
+    },
+    {
+        "action": "Add an employee",
+        "name": "Taan",
+        "id": "934583",
+        "email": "tsveristry@company.com",
+        "role": "Engineer",
+        "github": "tsveristry",
         "team": "Launch Team"
     }
 ]
