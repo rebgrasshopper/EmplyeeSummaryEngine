@@ -1,6 +1,3 @@
-const Manager = require("./lib/Manager");
-const Engineer = require("./lib/Engineer");
-const Intern = require("./lib/Intern");
 const inquirer = require("inquirer");
 const path = require("path");
 const fs = require("fs");
@@ -39,27 +36,32 @@ async function getEmployeeData(answers){
     if (answers.action === "Remove an Employee") {
         //find and remove employee from employeeData
         let index;
+        let teamName;
         for (let employee in employeeData){
             if (`${employeeData[employee].name}, Team: ${employeeData[employee].team}` === answers.unemploy) {
+                teamName = employeeData[employee].team;
                 index = employee;
             }
         }
         employeeData.splice(index, 1);
-
         //write new employeeData file without thisEmployee
         fs.writeFile("./output/employeeFile.json", JSON.stringify(employeeData, null, 4), function(error){
             if (error) {
                 return console.log(error);
             }
-            console.log("Employee removed from team, rendering new team HTML");
-            let thisTeam = employeeData.filter(employee => employee.team === employeeData[index].team)
-            finalHTML = render(thisTeam);
-            fs.writeFile(`./output/${employeeData[index].team.replace(/ /g, "")}.html`, finalHTML, function(error){
-                if (error) {
-                    return console.log(error);
-                }
-                console.log("HTML file written.");
-            });
+            console.log("Employee removed from team");
+            //render team without removed employee
+            let thisTeam = employeeData.filter(employee => employee.team === teamName)
+            if (thisTeam.length > 0){
+                console.log("Rendering updated HTML file");
+                finalHTML = render(thisTeam);
+                fs.writeFile(`./output/${teamName.replace(/ /g, "")}.html`, finalHTML, function(error){
+                    if (error) {
+                        return console.log(error);
+                    }
+                    console.log("HTML file written.");
+                });
+            }
         });
 
     } else if (answers.action === "Re-render a team page") {
