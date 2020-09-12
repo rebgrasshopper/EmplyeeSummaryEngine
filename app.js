@@ -1,11 +1,10 @@
 const inquirer = require("inquirer");
 const path = require("path");
 const fs = require("fs");
+const render = require("./lib/htmlRenderer");
 
 const OUTPUT_DIR = path.resolve("./output", "output");
 const outputPath = path.join(OUTPUT_DIR, "team.html");
-
-const render = require("./lib/htmlRenderer");
 
 let employeeData;
 let finalHTML;
@@ -19,6 +18,8 @@ function initialEmployeeData() {
             console.log(error);
         } else {
             employeeData = JSON.parse(data);
+
+            //make an array of all poossible teams, and one of all employees
             for (let employee of employeeData) {
                 if (!(teamList.includes(employee.team))) {
                     teamList.push(employee.team);
@@ -30,6 +31,7 @@ function initialEmployeeData() {
         }
     })
 }
+
 
 //process all answers and write team html files
 async function getEmployeeData(answers){
@@ -99,27 +101,27 @@ async function getEmployeeData(answers){
 
 //inquirer prompts
 const questions = [
-    {
+    {//pick one of three actions for the program
         type: "list",
         message: "What would you like to do? ",
         name: "action",
         choices: ["Add an employee", "Remove an Employee", "Re-render a team page"]
     },
-    {
+    {//Action 3: re-render team page
         type: "list",
         message: "Which team's page would you like to re-render? ",
         name: "reteam",
         when: (answers) => answers.action === "Re-render a team page",
         choices: teamList
     },
-    {
+    {//Action 2: remove employee
         type: "list",
         message: "Which employee would you like to remove? ",
         name: "unemploy",
         when: (answers) => answers.action === "Remove an Employee",
         choices: employeeList,
     },
-    {
+    {//Action 1: add employee data
         type: "input",
         message: "Employee name: ",
         name: "name",
